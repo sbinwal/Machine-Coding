@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Calculator = () => {
   const[calculateValue,setCalculateValue] = useState({
@@ -11,18 +11,15 @@ const Calculator = () => {
 
   const[EMI,setEMI] = useState(0)
 
+  useEffect(() => {
+    const emi = calculateEMI(calculateValue.downPayment);
+    setEMI(emi);
+  }, [calculateValue]);
+
+
   const changeValues = (e) =>{
      const {name,value} = e.target;
      setCalculateValue({...calculateValue, [name] : Number(value)})
-     if(name === "downPayment"){
-      const emi = calculateEMI(value)
-      setEMI(emi)
-     }
-    //  else{
-    //   const emi = calculateEMI(0)
-    //   console.log("sada",emi)
-    //   setEMI(emi)
-    //  }
   }
 
   const calculateTotalDownPayment = () =>{
@@ -42,7 +39,7 @@ const Calculator = () => {
         return EMI
   }
 
-  console.log("EMI",EMI)
+  console.log("EMIIIII",EMI)
 
   console.log("calculate",calculateValue)
   return (
