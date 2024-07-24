@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 
 const Calculator = () => {
   const[calculateValue,setCalculateValue] = useState({
-    principalAmount : 0,
-    rate : 0,
-    duration : 0,
-    processingFees : 1,
-    downPayment : 0
+    principalAmount : Number(0),
+    rate : Number(0),
+    duration : Number(0),
+    processingFees : Number(1),
+    downPayment : Number(0)
   })
 
   const[EMI,setEMI] = useState(0)
@@ -18,6 +18,11 @@ const Calculator = () => {
       const emi = calculateEMI(value)
       setEMI(emi)
      }
+    //  else{
+    //   const emi = calculateEMI(0)
+    //   console.log("sada",emi)
+    //   setEMI(emi)
+    //  }
   }
 
   const calculateTotalDownPayment = () =>{
@@ -27,12 +32,17 @@ const Calculator = () => {
   }
 
   const calculateEMI = (amount) =>{
+    
     const rate = calculateValue?.rate/100
-    const tenure = calculateValue?.duration / 12
+    const tenure = calculateValue?.duration
     const principal = calculateValue?.principalAmount - amount
-        const EMI = (principal * rate * ((1 + rate)**tenure))/((1 + rate)**tenure-1)
+    console.log("rate",rate,tenure,principal)
+        const EMI = (principal * rate * Math.pow(1 + rate, tenure)) / (Math.pow(1 + rate, tenure) - 1);
+        console.log("emi",EMI)
         return EMI
   }
+
+  console.log("EMI",EMI)
 
   console.log("calculate",calculateValue)
   return (
